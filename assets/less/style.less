@@ -1,0 +1,216 @@
+@import "typography";
+@import "colors";
+
+// Base Styles
+body { height: 100% }
+.mt-10 {
+    margin-top: 10px;
+}
+.mt-20 {
+    margin-top: 20px;
+}
+.mt-30 {
+    margin-top: 30px;
+}
+.mt-40 {
+    margin-top: 40px;
+}
+.mt-50 {
+    margin-top: 50px;
+}
+.mt-80 {
+	margin-top: 80px;
+}
+.pd-20 {
+	padding: 20px;
+}
+
+
+// Main Styles Starts Here
+.section-padding {
+	padding: 80px 0;
+}
+.black-table-area {
+	background-color: #1A1B20;
+	color: #fff;
+}
+.small-table-area {
+	background: transparent url("http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/geometry.png") repeat scroll 0% 0%;
+}
+.section-title {
+  color: #fff;
+  display: inline-block;
+  font-size: 20px;
+  letter-spacing: 0.1rem;
+  padding: 10px 24px;
+  text-transform: uppercase;
+}
+// Heading Backgrounds
+.blue-heading {
+  background-color: @blue-heading;
+}
+.aqua-heading {
+  background-color: @aqua-light;
+}
+.red-heading {
+	background-color: @light-red;
+}
+.purple-heading {
+	background-color: @light-purple;
+}
+// Box Shadows
+.box-shadow-mixin {
+	-webkit-box-shadow: 0px 2px 10px 2px rgba(221,221,221,0.73);
+	-moz-box-shadow: 0px 2px 10px 2px rgba(221,221,221,0.73);
+	box-shadow: 0px 2px 10px 2px rgba(221,221,221,0.73);
+}
+.black-box-shadow-mixin {
+	-webkit-box-shadow: 0px 2px 9px 10px rgba(20,21,25,0.78);
+	-moz-box-shadow: 0px 2px 9px 10px rgba(20,21,25,0.78);
+	box-shadow: 0px 2px 9px 10px rgba(20,21,25,0.78);
+}
+// Button Style Default
+.pricing-button a.btn {
+  color: #fff;
+  letter-spacing: 0.1rem;
+  padding: 12px 55px;
+  &:hover {
+  	opacity: 0.9;
+  }
+}
+.design-credit a {
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
+.gg-pricing-table .price {
+	font-family: @price-font;
+}
+// Pricing Table Icon
+.icon-table .single-pricing-table {
+	padding: 20px;
+	.box-shadow-mixin;
+	.pricing-table-heading {
+		h2 {
+			color: #3d6370;
+			font-size: 22px;
+			font-weight: 500;
+			letter-spacing: 0.1rem;
+			margin-top: 30px;
+			position: relative;
+			width: 100%;
+			&:after {
+				border: 1px dashed #eee;
+				content: "";
+				left: 0;
+				position: absolute;
+				top: 13px;
+				width: 100%;
+				z-index: -11111;
+			}
+		}
+	}
+	.price span {
+	  color: @light-red;
+	  font-size: 36px;
+	  font-weight: 700;
+	}
+	.pricing-item {
+		padding: 20px 0;
+		ul {
+			padding-left: 0;
+			li {
+				list-style: none;
+				p {
+					strong {
+						color: #325D6A;
+					}
+				}
+			}
+		}
+	}
+	.pricing-button {
+		padding: 20px 0;
+		a.btn-pricing {
+			background-color: @light-red;
+		}
+	}
+}
+
+// Dark Table
+.dark-table .pricing-special {
+	border: 3px solid @light-purple;
+} 
+.dark-table .single-pricing-table {
+	.black-box-shadow-mixin;
+	padding: 20px;
+	.pricing-table-heading {
+		h2 { 
+			font-size: 25px;
+			font-weight: 500;
+			letter-spacing: 0.1rem;
+			margin-top: 30px;
+		}
+		p {
+			font-size: 13px;
+		}
+	}
+	.price {
+		padding: 25px 0;
+		span {
+			  font-size: 42px;
+			  font-weight: 700;
+			  margin-top: 50px;
+			  color: @light-purple;
+		}
+	}
+	.pricing-item {
+		padding: 20px 0;
+		ul {
+			padding-left: 0;
+			li {
+				list-style: none;
+				p {
+					color: #E4E4E5;
+				}
+			}
+		}
+	}
+	.pricing-button {
+		padding: 20px 0;
+		a.btn-pricing {
+			background-color: @light-purple;
+			text-transform: uppercase;
+			border-radius: 0px;
+		}
+	}
+
+}
+.small-table .single-pricing-table {
+	padding: 20px;
+	border-radius: 20px;
+	background: #fff;
+	.box-shadow-mixin;
+	.price {
+		font-weight: 700;
+		font-size: 70px;
+		color: #303030;
+	}
+	.pricing-table-heading {
+		h2 {
+			color: #656565;
+			text-transform: uppercase;
+			font-size: 18px;
+		}
+		p {
+			color: #AFAFAF;
+		}
+	}
+	.pricing-button {
+		padding: 20px 0;
+		a.btn-pricing {
+			background-color: @aqua-light;
+			text-transform: uppercase;
+			border-radius: 20px;
+		}
+	}
+}

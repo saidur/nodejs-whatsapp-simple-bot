@@ -9,24 +9,76 @@
 /***************************************/
 var express = require('express');
 var app = express();
+app.use("/assets", express.static(__dirname + '/assets'));
+
 var useragent = require('express-useragent');
+var path    = require("path");
 const port = process.env.PORT || 5000;
 
 /***************************************/
 /*******         Router          *******/
 /***************************************/
 
+
+
+
+
 /*
  * http://<domain>
  * Desciption: Main page
  */
 app.get('/', (req, res) => {
-    var data = {
+    /*var data = {
         status: "success",
         message: "Hello to whatsapp direct message api. Developed by Amirul Zharfan Zalid - Github@amizz"
-    }
-    res.status(200).json(data);
+    }*/
+
+    res.sendFile(path.join(__dirname+'/index.html'));
+    //res.status(200).json(data);
 })
+
+/*
+ * http://<domain>
+ * Desciption: Main page
+ */
+app.get('/home',function(req,res){
+  res.sendFile(path.join(__dirname+'/index.html'));
+});
+
+
+// routes will go here
+app.get('/api/users', function(req, res) {
+  
+  var user_id = req.param('id');
+  var token = req.param('token');
+  var phonenum = req.param('phonenum');  
+
+  if (user_id != 'chakri123')
+  {
+     var data = {
+        status: "error",
+        message: "user id not match"
+    }   
+    res.status(400).json(data);
+    //res.status(400).json({status: "error: user_id not match"});
+
+  }
+  
+  var source = req.header('user-agent');
+  var ua = useragent.parse(source);
+
+    if (ua.isDesktop) {
+        res.status(308).redirect(`https://web.whatsapp.com/send?phone=+${req.params.phonenum}`);
+    } else if (ua.isMobile) {
+        res.status(308).redirect(`whatsapp://send?phone=+${req.params.phonenum}`);
+    } else {
+        res.status(400).json({status: "error"});
+    }
+
+  //res.send(user_id + ' ' + token + ' ' + geo);
+});
+
+
 
 /*
  * http://<domain>/:phonenum
