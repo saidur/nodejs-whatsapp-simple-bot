@@ -5,6 +5,16 @@
  * Web: amirulzharfan.com
  */
 
+var request = require('request');
+var http = require('http');
+var express = require('express');
+var bodyParser = require('body-parser');
+var compression = require('compression');
+
+var conf = require('./conf');
+
+
+
 
 /***************************************/
 /*******       Dependencies      *******/
@@ -12,7 +22,11 @@
 var express = require('express');
 var app = express();
 app.use("/assets", express.static(__dirname + '/assets'));
+app.use(compression());
+app.set('case sensitive routing', true);
+app.use(bodyParser.json());
 
+var httpServer = http.createServer(app);
 
 
 var useragent = require('express-useragent');
@@ -24,7 +38,54 @@ const port = process.env.PORT || 5000;
 /*******         Router          *******/
 /***************************************/
 
+app.get('/webhook/', handleVerify);
+app.post('/webhook/', receiveMessage);
 
+function handleVerify(req, res, next) {
+    var token = process.env.VERIFY_TOKEN || conf.VERIFY_TOKEN;
+    if (req.query['hub.verify_token'] === token) {
+        return res.send(req.query['hub.challenge']);
+    }
+    res.send('Validation failed, Verify token mismatch');
+}
+
+function receiveMessage(req, res, next) {
+    var message_instances = req.body.entry[0].messaging;
+    message_instances.forEach(function(instance){
+        var sender = instance.sender.id;
+        if(instance.message && instance.message.text) {
+            var msg_text = instance.message.text;
+            sendMessage(sender, msg_text, true);
+        }
+    });
+    res.sendStatus(200);
+}
+
+function sendMessage(receiver, data, isText) {
+    var payload = {};
+    payload = data;
+
+    if(isText) {
+        payload = {
+            text: data
+        };
+    }
+
+    request({
+        url: conf.FB_MESSAGE_URL,
+        method: 'POST',
+        qs: {
+            access_token: process.env.PROFILE_TOKEN || conf.PROFILE_TOKEN
+        },
+        json: {
+            recipient: {id: receiver},
+            message: payload
+        }
+    }, function (error, response) {
+        if(error) console.log('Error sending message: ', error);
+        if(response.body.error) console.log('Error: ', response.body.error);
+    });
+}
 
 
 
