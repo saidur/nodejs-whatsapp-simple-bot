@@ -1,8 +1,10 @@
+'use strict';
 /**
  * Whatsapp Direct Messaging API
  * Author: Amirul Zharfan Zalid
  * Web: amirulzharfan.com
  */
+
 
 /***************************************/
 /*******       Dependencies      *******/
@@ -11,9 +13,12 @@ var express = require('express');
 var app = express();
 app.use("/assets", express.static(__dirname + '/assets'));
 
+
+
 var useragent = require('express-useragent');
 var path    = require("path");
 const port = process.env.PORT || 5000;
+
 
 /***************************************/
 /*******         Router          *******/
@@ -43,6 +48,40 @@ app.get('/', (req, res) => {
  */
 app.get('/home',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
+});
+
+/*
+ * http://<domain>
+ * Desciption: Main page
+ */
+app.get('/kpapi',function(req,res){
+  //res.sendFile(path.join(__dirname+'/index.html'));
+    var http = require('http');
+
+    var instanceId = "3"; // TODO: Replace it with your gateway instance ID here
+    var clientId = "tarik@quanfey.net";     // TODO: Replace it with your Forever Green client ID here
+    var clientSecret = "c13f70ee928a41d4978f32b97663965f";  // TODO: Replace it with your Forever Green client secret here
+
+    var jsonPayload = JSON.stringify({
+        number: "12025550108",  // TODO: Specify the recipient's number here. NOT the gateway number
+        message: "Howdy, isn't this exciting?"
+    });
+
+    var options = {
+        hostname: "api.whatsmate.net",
+        port: 80,
+        path: "/v2/whatsapp/single/message/" + instanceId,
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-WM-CLIENT-ID": clientId,
+            "X-WM-CLIENT-SECRET": clientSecret,
+            "Content-Length": Buffer.byteLength(jsonPayload)
+        }
+    };
+
+
+
 });
 
 
