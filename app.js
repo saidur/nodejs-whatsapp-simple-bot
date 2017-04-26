@@ -184,7 +184,7 @@ app.get('/api/users', function(req, res) {
  * http://<domain>/:phonenum
  * Desciption: Redirect url to respective whatsapp api interface without message text
  */
-app.get('/:phonenum', (req, res) => {
+/*app.get('/:phonenum', (req, res) => {
     var source = req.header('user-agent');
     var ua = useragent.parse(source);
 
@@ -195,13 +195,13 @@ app.get('/:phonenum', (req, res) => {
     } else {
         res.status(400).json({status: "error"});
     }
-})
+})*/
 
 /*
  * http://<domain>/:phonenum/:message
  * Desciption: Redirect url to respective whatsapp api interface with message text
  */
-app.get('/:phonenum/:message', (req, res) => {
+/*app.get('/:phonenum/:message', (req, res) => {
     var source = req.header('user-agent');
     var ua = useragent.parse(source);
 
@@ -212,7 +212,7 @@ app.get('/:phonenum/:message', (req, res) => {
     } else {
         res.status(400).json({status: "error"});
     }
-})
+})*/
 
 /*
  * http://<domain>/whatsapp
