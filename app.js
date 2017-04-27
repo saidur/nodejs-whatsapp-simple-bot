@@ -10,25 +10,21 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var compression = require('compression');
-
 var conf = require('./conf');
-
-
-
 
 /***************************************/
 /*******       Dependencies      *******/
 /***************************************/
+
 var express = require('express');
 var app = express();
+
 app.use("/assets", express.static(__dirname + '/assets'));
 app.use(compression());
 app.set('case sensitive routing', true);
 app.use(bodyParser.json());
 
 var httpServer = http.createServer(app);
-
-
 var useragent = require('express-useragent');
 var path    = require("path");
 const port = process.env.PORT || 5000;
@@ -54,7 +50,10 @@ function receiveMessage(req, res, next) {
     message_instances.forEach(function(instance){
         var sender = instance.sender.id;
         if(instance.message && instance.message.text) {
-            var msg_text = instance.message.text;
+            //var msg_text = instance.message.text;
+
+            var msg_text =  "wecome to the chakri.com "+ instance.message.text + "How can i help you ?";
+
             sendMessage(sender, msg_text, true);
         }
     });
