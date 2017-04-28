@@ -73,6 +73,7 @@ function receiveMessage(req, res, next) {
     var message_instances = req.body.entry[0].messaging;
     message_instances.forEach(function(instance){
         var sender = instance.sender.id;
+        console.log ("hello " + sender);
         if(instance.message && instance.message.text) {
             //var msg_text = instance.message.text;
 
@@ -230,7 +231,8 @@ function sendGenericMessage(recipientId) {
   
   var messageData = {
     recipient: {
-      id: recipientId
+     // id: recipientId
+     "phone_number": "8801673615816"
     },
     message: {
       attachment: {
@@ -317,8 +319,8 @@ function sendGenericMessage(recipientId) {
 app.get('/whatsapp', (req, res) => {
     var source = req.header('user-agent');
     var ua = useragent.parse(source);
-    var phonenum = '0123456789';
-    
+    //var phonenum = '0123456789';
+    var phonenum = req.param('phonenum');  
     if (ua.isDesktop) {
         res.status(308).redirect(`https://web.whatsapp.com/send?phone=+${phonenum}`);
     } else if (ua.isMobile) {
