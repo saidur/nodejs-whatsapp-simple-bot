@@ -1,32 +1,33 @@
 'use strict';
 /**
- * Whatsapp Direct Messaging API
- * Author: Amirul Zharfan Zalid
- * Web: amirulzharfan.com
+ * Whatsapp Direct Messaging API 
+ * & Facebook Messanger bot 
+ * Author: Saidur Rahman
+ * Web: saidur.wordpress.com
  */
-
 var request = require('request');
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 var conf = require('./conf');
+var express = require('express');
+var app = express();
+
+var httpServer = http.createServer(app);
+var useragent = require('express-useragent');
+var path    = require("path");
+
 
 /***************************************/
 /*******       Dependencies      *******/
 /***************************************/
-
-var express = require('express');
-var app = express();
 
 app.use("/assets", express.static(__dirname + '/assets'));
 app.use(compression());
 app.set('case sensitive routing', true);
 app.use(bodyParser.json());
 
-var httpServer = http.createServer(app);
-var useragent = require('express-useragent');
-var path    = require("path");
 const port = process.env.PORT || 5000;
 
 
@@ -36,6 +37,27 @@ const port = process.env.PORT || 5000;
 
 app.get('/webhook/', handleVerify);
 app.post('/webhook/', receiveMessage);
+/*
+ * http://<domain>
+ * Desciption: Main page
+ */
+app.get('/home',function(req,res){
+  //var recipientId= req.query['id'];
+    //sendGenericMessage(recipientId);
+});
+
+app.get('/notify',function(req,res){
+    
+     var recipientId= req.query['id'];
+     console.log ('notify'+recipientId);
+   
+    sendGenericMessage(recipientId);
+});
+
+/*
+* facebook bot message
+*/
+
 
 function handleVerify(req, res, next) {
     var token = process.env.VERIFY_TOKEN || conf.VERIFY_TOKEN;
@@ -52,7 +74,7 @@ function receiveMessage(req, res, next) {
         if(instance.message && instance.message.text) {
             //var msg_text = instance.message.text;
 
-            var msg_text =  "wecome to the chakri.com "+ instance.message.text + "How can i help you ?";
+            var msg_text =  "chakri.com : "+ instance.message.text + " ";
 
             sendMessage(sender, msg_text, true);
         }
@@ -176,6 +198,79 @@ app.get('/api/users', function(req, res) {
 
   //res.send(user_id + ' ' + token + ' ' + geo);
 });
+
+
+
+function callSendAPI(messageData) {
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: process.env.PROFILE_TOKEN || conf.PROFILE_TOKEN },
+    method: 'POST',
+    json: messageData
+
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      console.log("Successfully sent generic message with id %s to recipient %s", 
+        messageId, recipientId);
+    } else {
+      console.error("Unable to send message.");
+      console.error(response);
+      console.error(error);
+    }
+  });  
+}
+
+
+function sendGenericMessage(recipientId) {
+  
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            title: "rift",
+            subtitle: "Next-generation virtual reality",
+            item_url: "https://www.oculus.com/en-us/rift/",               
+            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.oculus.com/en-us/rift/",
+              title: "Open Web URL"
+            }, {
+              type: "postback",
+              title: "Call Postback",
+              payload: "Payload for first bubble",
+            }],
+          }, {
+            title: "touch",
+            subtitle: "Your Hands, Now in VR",
+            item_url: "https://www.oculus.com/en-us/touch/",               
+            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.oculus.com/en-us/touch/",
+              title: "Open Web URL"
+            }, {
+              type: "postback",
+              title: "Call Postback",
+              payload: "Payload for second bubble",
+            }]
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
 
 
 
