@@ -215,15 +215,18 @@ function callSendAPI(messageData) {
     if (!error && response.statusCode == 200) {
       var recipientId = body.recipient_id;
       var messageId = body.message_id;
-
+       res.sendStatus(200);
       console.log("Successfully sent generic message with id %s to recipient %s", 
         messageId, recipientId);
     } else {
       console.error("Unable to send message.");
       console.error(response);
       console.error(error);
+        res.sendStatus(200); 
     }
-  });  
+
+  }); 
+
 }
 
 
@@ -322,7 +325,8 @@ app.get('/whatsapp', (req, res) => {
     //var phonenum = '0123456789';
     var phonenum = req.param('phonenum');  
     if (ua.isDesktop) {
-        res.status(308).redirect(`https://web.whatsapp.com/send?phone=+${phonenum}`);
+        //res.status(308).redirect(`https://web.whatsapp.com/send?phone=+${phonenum}`);
+        res.status(308).redirect(`https://web.whatsapp.com/send?phone=+${req.params.phonenum}&text=${req.params.message}`);
     } else if (ua.isMobile) {
         res.status(308).redirect(`whatsapp://send?phone=+${phonenum}`);
     } else {
