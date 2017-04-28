@@ -49,7 +49,7 @@ app.get('/home',function(req,res){
 app.get('/notify',function(req,res){
     
      var recipientId= req.query['id'];
-     var recipientId='10154235819117742';
+     var recipientId='579312741';
 
      console.log ('notify'+recipientId);
    
