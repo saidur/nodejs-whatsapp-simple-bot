@@ -51,10 +51,12 @@ app.get('/notify',function(req,res){
      var recipientId= req.query['id'];
      var recipientId='579312741';
 
-     console.log ('notify'+recipientId);
+     //console.log ('notify'+recipientId);
    
       sendGenericMessage(recipientId);
-       res.sendStatus(200);
+       res.status(200).json({status: "Successfully send message"});
+
+       //res.sendStatus(200);
 });
 
 /*
