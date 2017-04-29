@@ -244,13 +244,13 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
+            title: "Banking job",
+            subtitle: "Assistant Professor, Banking and Insurance",
+            item_url: "http://www.chakri.com/job/show/31495/Assistant-Professor-Banking-and-Insurance",               
             image_url: "http://messengerdemo.parseapp.com/img/rift.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
+              url: "http://www.chakri.com/job/show/31495/Assistant-Professor-Banking-and-Insurance",
               title: "Open Web URL"
             }, {
               type: "postback",
@@ -258,13 +258,13 @@ function sendGenericMessage(recipientId) {
               payload: "Payload for first bubble",
             }],
           }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
+            title: "Education Sector",
+            subtitle: "Lecturer, School of Law",
+            item_url: "http://www.chakri.com/job/show/31468/Lecturer-School-of-Law",               
             image_url: "http://messengerdemo.parseapp.com/img/touch.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
+              url: "http://www.chakri.com/job/show/31468/Lecturer-School-of-Law",
               title: "Open Web URL"
             }, {
               type: "postback",
