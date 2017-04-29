@@ -320,7 +320,7 @@ function sendGenericMessage(recipientId) {
  * http://<domain>/whatsapp
  * Desciption: Redirect url to respective whatsapp api interface using predefined phone number
  */
-app.get('/whatsapp', (req, res) => {
+app.get('/whatsapp/:phonenum/:message', (req, res) => {
     var source = req.header('user-agent');
     var ua = useragent.parse(source);
     //var phonenum = '0123456789';
