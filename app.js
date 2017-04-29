@@ -54,6 +54,7 @@ app.get('/notify',function(req,res){
      console.log ('notify'+recipientId);
    
       sendGenericMessage(recipientId);
+       res.sendStatus(200);
 });
 
 /*
